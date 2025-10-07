@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- https://phpunit.readthedocs.io/en/latest/configuration.html -->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/12.4/phpunit.xsd"
+         colors="true"
+         bootstrap="./vendor/autoload.php"
+>
+
+  <testsuites>
+    <testsuite name="unit">
+      <directory>tests/unit</directory>
+    </testsuite>
+
+    <testsuite name="integration">
+      <directory>tests/integration</directory>
+    </testsuite>
+
+    <testsuite name="edge-to-edge">
+      <directory>tests/edge-to-edge</directory>
+      <exclude>tests/edge-to-edge/pathToIgnore</exclude>
+    </testsuite>
+  </testsuites>
+</phpunit>
