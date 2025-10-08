@@ -7,7 +7,6 @@ use App\Enums\Status;
 use App\Models\User;
 use PHPUnit\Framework\TestCase;
 use Faker\Factory;
-use PHPUnit\Framework\MockObject\MockObject;
 
 final class UserModelTest extends TestCase
 {
@@ -22,8 +21,8 @@ final class UserModelTest extends TestCase
     private function mockUserModel(bool $generatePassword = true) : User
     {
         $params =[
-            'firstname' => $this->faker->firstName(),
-            'lastname' => $this->faker->lastName(),
+            'firstName' => $this->faker->firstName(),
+            'lastName' => $this->faker->lastName(),
             'email' => $this->faker->email(),
             'role' => $this->faker->randomElement(Role::cases()),
             'status' => $this->faker->randomElement(Status::cases())
@@ -35,8 +34,8 @@ final class UserModelTest extends TestCase
         }
 
         $user = new User(
-            firstname: $params['firstname'],
-            lastname: $params['lastname'],
+            firstName: $params['firstName'],
+            lastName: $params['lastName'],
             email: $params['email'],
             role: $params['role'],
             status: $params['status'],
@@ -49,6 +48,12 @@ final class UserModelTest extends TestCase
     public function testUserWithPassword()
     {
         $user = $this->mockUserModel(generatePassword: true);
-        $this->assertTrue(true);
+        $this->assertInstanceOf(User::class, $user);
+    }
+
+    public function testUserWithoutPassword()
+    {
+        $user = $this->mockUserModel(generatePassword: false);
+        $this->assertInstanceOf(User::class, $user);
     }
 }
