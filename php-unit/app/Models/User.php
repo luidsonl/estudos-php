@@ -11,8 +11,8 @@ class User
         public string $firstName,
         public string $lastName,
         public string $email,
-        public ?string $password,
         public Role $role,
-        public Status $status
+        public Status $status,
+        public ?string $password = null
     ) {}
 }

@@ -31,6 +31,17 @@ final class UserModelTest extends TestCase
         if($generatePassword)
         {
             $params['password'] = password_hash($this->faker->password(), PASSWORD_BCRYPT);
+            
+            $user = new User(
+                firstName: $params['firstName'],
+                lastName: $params['lastName'],
+                email: $params['email'],
+                role: $params['role'],
+                status: $params['status'],
+                password: $params['password'],
+            );
+
+            return $user;
         }
 
         $user = new User(
@@ -38,8 +49,7 @@ final class UserModelTest extends TestCase
             lastName: $params['lastName'],
             email: $params['email'],
             role: $params['role'],
-            status: $params['status'],
-            password: $params['password'],
+            status: $params['status']
         );
 
         return $user;
