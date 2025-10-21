@@ -10,6 +10,7 @@ final class TopicModelTest extends TestCase
     public function testTopicCreationWithValidData()
     {
         $topic = new Topic(
+            id: Faker::create()->uuid(),
             title: Faker::create()->sentence(),
             subjects: [Subjects::MATH, Subjects::SCIENCE]
         );
@@ -27,6 +28,7 @@ final class TopicModelTest extends TestCase
     public function testTopicCreationWithEmptySubjects()
     {
         $topic = new Topic(
+            id: Faker::create()->uuid(),
             title: Faker::create()->sentence(),
             subjects: []
         );
@@ -40,6 +42,7 @@ final class TopicModelTest extends TestCase
     public function testTopicCreationWithSingleSubject()
     {
         $topic = new Topic(
+            id: Faker::create()->uuid(),
             title: Faker::create()->sentence(),
             subjects: [Subjects::HISTORY]
         );
@@ -52,6 +55,7 @@ final class TopicModelTest extends TestCase
     public function testTopicCreationWithAllSubjects()
     {
         $topic = new Topic(
+            id: Faker::create()->uuid(),
             title: Faker::create()->sentence(),
             subjects: Subjects::cases()
         );
@@ -66,39 +70,39 @@ final class TopicModelTest extends TestCase
         $this->expectException(\InvalidArgumentException::class);
         
         $topic = new Topic(
+            id: Faker::create()->uuid(),
             title: Faker::create()->sentence(),
             subjects: ['invalid_string', 123, null]
         );
     }
 
-    public function testTopicCreationWithDuplicateSubjects()
+    public function testTopicCreationWithDuplicateSubjectsShouldFail()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        
         $topic = new Topic(
+            id: Faker::create()->uuid(),
             title: Faker::create()->sentence(),
             subjects: [Subjects::MATH, Subjects::MATH, Subjects::SCIENCE]
         );
-
-        $this->assertInstanceOf(Topic::class, $topic);
-        $this->assertCount(3, $topic->subjects);
-        $this->assertEquals(Subjects::MATH, $topic->subjects[0]);
-        $this->assertEquals(Subjects::MATH, $topic->subjects[1]);
     }
 
-    public function testTopicCreationWithEmptyTitle()
+    public function testTopicCreationWithEmptyTitleShouldFail()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        
         $topic = new Topic(
+            id: Faker::create()->uuid(),
             title: '',
             subjects: [Subjects::LITERATURE]
         );
-
-        $this->assertInstanceOf(Topic::class, $topic);
-        $this->assertEquals('', $topic->title);
     }
 
 
     public function testTopicSubjectValuesAreCorrect()
     {
         $topic = new Topic(
+            id: Faker::create()->uuid(),
             title: "Test Topic",
             subjects: [Subjects::MATH, Subjects::SCIENCE, Subjects::HISTORY]
         );
@@ -112,6 +116,7 @@ final class TopicModelTest extends TestCase
     public function testTopicSubjectNamesAreCorrect()
     {
         $topic = new Topic(
+            id: Faker::create()->uuid(),
             title: "Test Topic",
             subjects: [Subjects::LITERATURE, Subjects::MATH]
         );
@@ -125,6 +130,7 @@ final class TopicModelTest extends TestCase
     public function testTopicWithoutSubjectsParameter()
     {
         $topic = new Topic(
+            id: Faker::create()->uuid(),
             title: Faker::create()->sentence()
         );
 

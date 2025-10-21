@@ -7,11 +7,24 @@ use App\Enums\Subjects;
 class Topic
 {
     public function __construct(
+        public string $id,
         public string $title,
         /** @var Subjects[] */
         public array $subjects = []
     ) {
+        $this->validateTitle($title);
         $this->validateSubjects($subjects);
+    }
+
+    /**
+     * @param string $title
+     * @throws \InvalidArgumentException
+     */
+    private function validateTitle(string $title): void
+    {
+        if (empty(trim($title))) {
+            throw new \InvalidArgumentException('Title cannot be empty');
+        }
     }
 
     /**
@@ -27,6 +40,14 @@ class Topic
                     ", got " . (is_object($subject) ? get_class($subject) : gettype($subject))
                 );
             }
+        }
+
+        $uniqueSubjects = [];
+        foreach ($subjects as $subject) {
+            if (in_array($subject, $uniqueSubjects, true)) {
+                throw new \InvalidArgumentException('Duplicate subjects are not allowed');
+            }
+            $uniqueSubjects[] = $subject;
         }
     }
 }
