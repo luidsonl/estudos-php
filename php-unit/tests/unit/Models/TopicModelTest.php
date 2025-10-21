@@ -138,4 +138,18 @@ final class TopicModelTest extends TestCase
         $this->assertIsArray($topic->subjects);
         $this->assertEmpty($topic->subjects);
     }
+
+    public function testMessageIdsAreProperUUIDs()
+    {
+        $topic = new Topic(
+            id: Faker::create()->uuid(),
+            title: Faker::create()->sentence(),
+            subjects: [Subjects::MATH, Subjects::SCIENCE]
+        );
+
+        $this->assertMatchesRegularExpression(
+            '/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i',
+            $topic->id
+        );
+    }
 }
